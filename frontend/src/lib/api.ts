@@ -1,6 +1,7 @@
 import type {
   CreateTodoInput,
   ErrorResponse,
+  FieldError,
   HealthResponse,
   Todo,
   UpdateTodoInput,
@@ -57,4 +58,15 @@ export function getErrorMessage(err: unknown): string {
   if (err instanceof TypeError) return 'Cannot reach the API. Is the backend running?';
   if (err instanceof Error) return err.message;
   return 'Something went wrong';
+}
+
+/** Turns the `details` of a 400 response into `{ title: 'Title is required', ... }`. */
+export function getFieldErrors(err: unknown): Record<string, string> {
+  const result: Record<string, string> = {};
+  if (err instanceof ApiError && Array.isArray(err.details)) {
+    for (const item of err.details as FieldError[]) {
+      result[item.field] = item.message;
+    }
+  }
+  return result;
 }

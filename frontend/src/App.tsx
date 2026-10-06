@@ -1,13 +1,9 @@
-import { useHealth } from './hooks/useHealth';
-import { useTodos } from './hooks/useTodos';
-import { FilterBar } from './components/FilterBar';
 import { StatusBadge } from './components/StatusBadge';
-import { TodoForm } from './components/TodoForm';
-import { TodoList } from './components/TodoList';
+import { TodosPanel } from './components/TodosPanel';
+import { useHealth } from './hooks/useHealth';
 
 export default function App() {
   const health = useHealth();
-  const todos = useTodos();
 
   return (
     <div className="container py-5" style={{ maxWidth: 672 }}>
@@ -20,36 +16,7 @@ export default function App() {
       </header>
 
       <main className="card shadow-sm overflow-hidden">
-        <div className="card-body p-0">
-          <TodoForm onAdd={todos.add} />
-
-          {todos.error && (
-            <div className="alert alert-danger alert-dismissible small py-2 mx-3 mb-3" role="alert">
-              {todos.error}
-              <button
-                type="button"
-                className="btn-close py-2"
-                aria-label="Dismiss"
-                onClick={todos.dismissError}
-              />
-            </div>
-          )}
-
-          <TodoList
-            todos={todos.visibleTodos}
-            loading={todos.loading}
-            onToggle={todos.toggle}
-            onRemove={todos.remove}
-          />
-        </div>
-
-        <FilterBar
-          filter={todos.filter}
-          onChange={todos.setFilter}
-          remaining={todos.remaining}
-          completedCount={todos.completedCount}
-          onClearCompleted={todos.clearCompleted}
-        />
+        <TodosPanel />
       </main>
 
       <footer className="mt-4 text-center small text-body-secondary">
