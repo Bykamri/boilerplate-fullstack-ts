@@ -1,0 +1,25 @@
+/* Small overrides on top of Bootstrap. Prefer utility classes in JSX first. */
+body {
+  min-height: 100vh;
+  background-color: var(--bs-tertiary-bg);
+}
+
+.todo-item .todo-delete {
+  opacity: 0;
+  transition: opacity 0.15s;
+}
+
+.todo-item:hover .todo-delete,
+.todo-item .todo-delete:focus-visible {
+  opacity: 1;
+}
+
+@media (hover: none) {
+  .todo-item .todo-delete {
+    opacity: 1;
+  }
+}
+
+.todo-title {
+  overflow-wrap: anywhere;
+}
